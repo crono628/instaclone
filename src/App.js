@@ -1,15 +1,17 @@
 import React from 'react';
-import Feed from './components/Feed';
-import mockData from './components/mockData';
+import Feed from './components/Feed/Feed';
+import mockUser from './components/mockUser';
 import Nav from './components/Nav';
-
-let tester = mockData.find((user) => user.name === 'Mikey');
+import Profile from './components/Profile/Profile';
 
 const App = () => {
   return (
-    <div>
+    <div className="bg-slate-200">
       <Nav />
-      <Feed posts={tester.posts} />
+      <div className="max-w-5xl mx-auto">
+        <Profile user={mockUser} />
+        {/* <Feed posts={tester.posts} /> */}
+      </div>
     </div>
   );
 };

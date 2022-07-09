@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Card = ({ post }) => {
+const FeedCard = ({ post }) => {
   console.log(post.avatar);
 
   return (
@@ -34,4 +34,4 @@ const Card = ({ post }) => {
   );
 };
 
-export default Card;
+export default FeedCard;
