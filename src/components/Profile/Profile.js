@@ -5,7 +5,7 @@ import InsertCommentIcon from '@mui/icons-material/InsertComment';
 
 const Profile = ({ user }) => {
   return (
-    <div className="m-3">
+    <div className="m-3 ">
       {/* top row */}
       <div className="text-sm sm:text-lg flex items-center py-2 mb-8">
         <img
