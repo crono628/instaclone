@@ -36,10 +36,10 @@ const Profile = ({ user }) => {
           return (
             <div
               key={post.caption + index}
-              className="bg-lime-50 flex flex-col mx-auto border-solid border-2 border-fuchsia-300 rounded-lg"
+              className="bg-lime-50 flex flex-col mx-auto border-solid border-2 border-zinc-800 rounded-lg"
             >
               <img
-                className="object-contain rounded-md flex-1"
+                className="h-48 w-64 border-solid border-2 border-zinc-800 bg-neutral-500 object-contain rounded-md "
                 src={post.img}
                 alt={post.caption}
               />

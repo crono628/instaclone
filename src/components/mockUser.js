@@ -12,7 +12,7 @@ let mockUser = {
       timestamp: 'now',
     },
     {
-      img: 'https://cdn.vox-cdn.com/thumbor/1BsXO4HiXiF2g-v8FmcLFmxZwBE=/0x16:1103x751/1520x1013/filters:focal(0x16:1103x751):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/46840054/Screenshot_2015-07-27_15.11.13.0.0.png',
+      img: 'https://ids.si.edu/ids/deliveryService?id=NMAH-ET2016-10503&max=1000',
       caption: 'CARROT KING',
       likes: 55,
       comments: [{ user: 'Daffy', comment: 'behold the carrot king' }],
@@ -33,7 +33,7 @@ let mockUser = {
       timestamp: 'now',
     },
     {
-      img: 'https://cdn.vox-cdn.com/thumbor/1BsXO4HiXiF2g-v8FmcLFmxZwBE=/0x16:1103x751/1520x1013/filters:focal(0x16:1103x751):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/46840054/Screenshot_2015-07-27_15.11.13.0.0.png',
+      img: 'https://uproxx.com/wp-content/uploads/2021/11/bugs-bunny-daffy-duck-top.jpeg',
       caption: 'CARROT KING',
       likes: 55,
       comments: [{ user: 'Daffy', comment: 'behold the carrot king' }],
