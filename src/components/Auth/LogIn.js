@@ -28,20 +28,20 @@ const LogIn = () => {
 
   return (
     <div className="h-[100vh]">
-      <div className="flex flex-col py-4 mx-auto mt-12 max-w-sm items-center border rounded-md border-black bg-white">
-        <p className="text-2xl">Log In</p>
+      <div className="flex fixed flex-col py-4 mx-auto left-0 right-0 mt-12 max-w-xs items-center border rounded-md border-black bg-white">
+        <p className="text-3xl">Log In</p>
         <p className="h-7 text-red-600">{error}</p>
         <form className="flex flex-col" onSubmit={handleSubmit}>
           <label>Email</label>
           <input
-            className="border border-black rounded-md p-1"
+            className="border border-black rounded-md p-1 mb-3"
             ref={emailRef}
             type="email"
             required
           />
           <label>Password</label>
           <input
-            className="border border-black rounded-md p-1"
+            className="border border-black rounded-md p-1 mb-3"
             ref={passwordRef}
             type="password"
             required
@@ -54,8 +54,8 @@ const LogIn = () => {
             Log In
           </button>
         </form>
-        <p>
-          Don't have an account?{' '}
+        <p className="my-2">
+          Need an account?{' '}
           <Link className="underline" to="/signup">
             Sign up
           </Link>

@@ -1,7 +1,6 @@
 let mockUser = {
   name: 'Mikey',
-  email: 'fake@fake.com',
-  password: 'password',
+  email: 'fake@fake.test',
   avatar: 'https://m.media-amazon.com/images/I/5101NtSnx0L._AC_.jpg',
   posts: [
     {
