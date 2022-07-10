@@ -1,0 +1,7 @@
+{
+  "hosting": {
+    "site": "instaclone-6ea46",
+    "public": "build",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+  }
+}

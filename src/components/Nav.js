@@ -7,7 +7,7 @@ export const Nav = ({ user }) => {
       <div className="flex max-w-5xl justify-between mx-auto">
         <div className="flex text-3xl flex-1 font-bold pl-2 py-2 ">
           <Link to="/profile" className="cursor-pointer ">
-            Petstagram
+            InstaClone
           </Link>
         </div>
         <div className="text-3xl cursor-pointer font-bold px-2 py-2 ">
