@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 
@@ -8,7 +8,13 @@ const LogIn = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, googleLogin, currentUser } = useAuth();
+
+  useEffect(() => {
+    if (currentUser !== null) {
+      navigate('/');
+    }
+  }, [currentUser]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,6 +22,22 @@ const LogIn = () => {
     try {
       setError('');
       await login(emailRef.current.value, passwordRef.current.value);
+      navigate('/');
+    } catch (error) {
+      setError('Invalid email or password');
+      setTimeout(() => {
+        setError('');
+      }, 3000);
+    }
+    setLoading(false);
+  };
+
+  const handleGoogle = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      setError('');
+      await googleLogin();
       navigate('/');
     } catch (error) {
       setError('Invalid email or password');
@@ -53,6 +75,13 @@ const LogIn = () => {
           >
             Log In
           </button>
+          <div
+            onClick={handleGoogle}
+            disabled={loading}
+            className="py-2 my-2 rounded-md cursor-pointer text-center bg-blue-600 hover:bg-blue-500 text-white"
+          >
+            Log In With Google
+          </div>
         </form>
         <p className="my-2">
           Need an account?{' '}
