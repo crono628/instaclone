@@ -14,7 +14,6 @@ const LogIn = () => {
     if (currentUser !== null) {
       navigate('/');
     }
-    // console.log('currentUser', currentUser);
   }, [currentUser]);
 
   const handleSubmit = async (e) => {
@@ -23,7 +22,6 @@ const LogIn = () => {
     try {
       setError('');
       await login(emailRef.current.value, passwordRef.current.value);
-      navigate('/');
     } catch (error) {
       setError('Invalid email or password');
       setTimeout(() => {
@@ -39,7 +37,6 @@ const LogIn = () => {
     try {
       setError('');
       await googleLogin();
-      navigate('/');
     } catch (error) {
       setError('Invalid email or password');
       setTimeout(() => {

@@ -12,8 +12,8 @@ import Profile from './components/Profile/Profile';
 const App = () => {
   return (
     <div className="bg-slate-200">
-      <HashRouter>
-        <AuthProvider>
+      <AuthProvider>
+        <HashRouter>
           <Nav path="/" />
           <div className="max-w-3xl mx-auto">
             <Routes>
@@ -25,8 +25,8 @@ const App = () => {
               </Route>
             </Routes>
           </div>
-        </AuthProvider>
-      </HashRouter>
+        </HashRouter>
+      </AuthProvider>
     </div>
   );
 };

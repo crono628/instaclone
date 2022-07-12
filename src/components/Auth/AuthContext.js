@@ -3,12 +3,11 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
-  GoogleAuthProvider,
-  signInWithPopup,
   signInWithRedirect,
+  GoogleAuthProvider,
 } from 'firebase/auth';
 import React, { useContext, useEffect, useState, createContext } from 'react';
-import { auth, googleProvider } from '../../firebase';
+import { auth, googleProvider } from '../../firebase.js';
 
 const AuthContext = createContext();
 
@@ -40,13 +39,10 @@ export const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
-  const googleLogin = async () => {
-    try {
-      // return signInWithPopup(auth, provider);
-      await signInWithRedirect(auth, googleProvider);
-    } catch (error) {
-      console.log(error);
-    }
+  const googleLogin = () => {
+    const googleProvider = new GoogleAuthProvider();
+    // return signInWithPopup(auth, provider);
+    return signInWithRedirect(auth, googleProvider);
   };
 
   const value = {
