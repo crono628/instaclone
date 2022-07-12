@@ -14,6 +14,7 @@ const LogIn = () => {
     if (currentUser !== null) {
       navigate('/');
     }
+    // console.log('currentUser', currentUser);
   }, [currentUser]);
 
   const handleSubmit = async (e) => {

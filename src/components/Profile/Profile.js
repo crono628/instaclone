@@ -2,8 +2,10 @@ import React from 'react';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import InsertCommentIcon from '@mui/icons-material/InsertComment';
+import { useAuth } from '../Auth/AuthContext';
 
 const Profile = ({ user }) => {
+  const { currentUser } = useAuth();
   return (
     <div className="m-3 ">
       {/* top row */}
@@ -13,7 +15,9 @@ const Profile = ({ user }) => {
           src={user.avatar}
           alt="AVATAR"
         />
-        <div className="ml-2 w-1/3 ">{user.name}</div>
+        <div className="ml-2 w-1/3 ">
+          {currentUser.displayName ? currentUser.displayName : user.name}
+        </div>
         {/* stats */}
         <div className="text-xs sm:text-lg flex w-full justify-around">
           <div className="flex flex-col items-center">

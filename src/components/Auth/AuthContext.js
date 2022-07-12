@@ -8,7 +8,7 @@ import {
   signInWithRedirect,
 } from 'firebase/auth';
 import React, { useContext, useEffect, useState, createContext } from 'react';
-import { auth } from '../../firebase';
+import { auth, googleProvider } from '../../firebase';
 
 const AuthContext = createContext();
 
@@ -40,9 +40,13 @@ export const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
-  const googleLogin = () => {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider);
+  const googleLogin = async () => {
+    try {
+      // return signInWithPopup(auth, provider);
+      await signInWithRedirect(auth, googleProvider);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const value = {

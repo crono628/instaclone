@@ -21,7 +21,7 @@ const App = () => {
               <Route path="/signup" element={<SignUp />} />
               <Route exact path="/" element={<PrivateRoute />}>
                 {/* <Route exact path='/' element={<Feed/>} /> */}
-                <Route path="/" element={<Profile user={mockUser} />} />
+                <Route exact path="/" element={<Profile user={mockUser} />} />
               </Route>
             </Routes>
           </div>
