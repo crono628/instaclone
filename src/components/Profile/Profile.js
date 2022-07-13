@@ -6,6 +6,7 @@ import { useAuth } from '../Auth/AuthContext';
 
 const Profile = ({ user }) => {
   const { currentUser } = useAuth();
+
   return (
     <div className="m-3 ">
       {/* top row */}
@@ -40,13 +41,15 @@ const Profile = ({ user }) => {
           return (
             <div
               key={post.caption + index}
-              className="bg-lime-50 flex flex-col mx-auto border-solid border-2 border-zinc-800 rounded-lg"
+              className=" w-full bg-lime-50 flex flex-col mx-auto border-solid border-2 border-zinc-800 rounded-lg"
             >
-              <img
-                className="h-48 w-64 border-solid border-2 border-zinc-800 bg-neutral-500 object-contain rounded-md "
-                src={post.img}
-                alt={post.caption}
-              />
+              <div className="flex-1 flex ">
+                <img
+                  className="max-h-24 sm:max-h-48 w-full border-solid border-2 border-zinc-800 bg-neutral-500 object-contain rounded-md "
+                  src={post.img}
+                  alt={post.caption}
+                />
+              </div>
               <div className="text-xs sm:text-lg flex flex-row justify-between py-1">
                 <div className="pl-2">
                   <ThumbUpOffAltIcon fontSize="inherit" /> {post.likes}

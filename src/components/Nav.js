@@ -10,12 +10,14 @@ export const Nav = () => {
           InstaClone
         </div>
         {currentUser ? (
-          <button
-            onClick={() => logout()}
-            className="text-3xl cursor-pointer font-bold px-2 py-2 "
-          >
-            Log Out
-          </button>
+          <div>
+            <button
+              onClick={() => logout()}
+              className="text-3xl cursor-pointer font-bold px-2 py-2 "
+            >
+              Log Out
+            </button>
+          </div>
         ) : null}
       </div>
     </div>

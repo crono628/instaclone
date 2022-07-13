@@ -5,9 +5,10 @@ import {
   signOut,
   signInWithRedirect,
   GoogleAuthProvider,
+  getRedirectResult,
 } from 'firebase/auth';
 import React, { useContext, useEffect, useState, createContext } from 'react';
-import { auth, googleProvider } from '../../firebase.js';
+import { auth } from '../../firebase.js';
 
 const AuthContext = createContext();
 
@@ -59,3 +60,13 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+
+// const handleGetRedirectResult = async () => {
+//   try {
+//     const result = await getRedirectResult(auth);
+//     console.log(result);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+// handleGetRedirectResult();
