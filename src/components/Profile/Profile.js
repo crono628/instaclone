@@ -26,8 +26,18 @@ const Profile = () => {
     const userSnap = await getDoc(userRef);
     if (userSnap.exists()) {
       console.log(userSnap.data());
+      console.log('user found');
     } else {
-      console.log('no user');
+      await setDoc(doc(db, 'instaUsers', currentUser.uid), {
+        name: currentUser.displayName || currentUser.email,
+        email: currentUser.email,
+        avatar: currentUser.photoURL,
+        uid: currentUser.uid,
+        followers: [],
+        following: [],
+        posts: [],
+      });
+      console.log('user created');
     }
     // const q = query(userRef, where('uid', '==', currentUser.uid));
     // const querySnapshot = await getDocs(q);
@@ -35,7 +45,6 @@ const Profile = () => {
     // querySnapshot.forEach((doc) => {
     //   console.log(doc.id, '=>', doc.data());
     // });
-    console.log('query');
   }
 
   useEffect(() => {
