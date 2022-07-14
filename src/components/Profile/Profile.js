@@ -3,30 +3,59 @@ import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import InsertCommentIcon from '@mui/icons-material/InsertComment';
+import {
+  collection,
+  doc,
+  setDoc,
+  query,
+  where,
+  getDocs,
+  getDoc,
+} from 'firebase/firestore';
 import { useAuth } from '../Auth/AuthContext';
+import { db } from '../../firebase';
+import { async } from '@firebase/util';
 
 const Profile = () => {
   const { currentUser } = useAuth();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (currentUser) {
-      setUser({
-        name: currentUser.displayName || currentUser.email,
-        email: currentUser.email,
-        avatar: currentUser.photoURL,
-        uid: currentUser.uid,
-        followers: [],
-        following: [],
-        posts: [],
-      });
-      setLoading(false);
+  async function queryThing() {
+    const userRef = doc(db, 'instaUsers', currentUser.uid);
+    const userSnap = await getDoc(userRef);
+    if (userSnap.exists()) {
+      console.log(userSnap.data());
     } else {
-      setLoading(true);
+      console.log('no user');
+    }
+    // const q = query(userRef, where('uid', '==', currentUser.uid));
+    // const querySnapshot = await getDocs(q);
+
+    // querySnapshot.forEach((doc) => {
+    //   console.log(doc.id, '=>', doc.data());
+    // });
+    console.log('query');
+  }
+
+  useEffect(() => {
+    // setUser({
+    //   name: currentUser.displayName || currentUser.email,
+    //   email: currentUser.email,
+    //   avatar: currentUser.photoURL,
+    //   uid: currentUser.uid,
+    //   followers: [],
+    //   following: [],
+    //   posts: [],
+    // });
+    //   setLoading(false);
+    // } else {
+    //   setLoading(true);
+
+    if (currentUser) {
+      queryThing();
     }
   }, [currentUser]);
-  console.log(currentUser);
 
   return (
     loading === false && (
