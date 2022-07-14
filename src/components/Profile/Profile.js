@@ -13,93 +13,52 @@ import {
   getDoc,
 } from 'firebase/firestore';
 import { useAuth } from '../Auth/AuthContext';
-import { db } from '../../firebase';
-import { async } from '@firebase/util';
 
 const Profile = () => {
   const { currentUser } = useAuth();
-  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  async function queryThing() {
-    const userRef = doc(db, 'instaUsers', currentUser.uid);
-    const userSnap = await getDoc(userRef);
-    if (userSnap.exists()) {
-      console.log(userSnap.data());
-      console.log('user found');
-    } else {
-      await setDoc(doc(db, 'instaUsers', currentUser.uid), {
-        name: currentUser.displayName || currentUser.email,
-        email: currentUser.email,
-        avatar: currentUser.photoURL,
-        uid: currentUser.uid,
-        followers: [],
-        following: [],
-        posts: [],
-      });
-      console.log('user created');
-    }
-    // const q = query(userRef, where('uid', '==', currentUser.uid));
-    // const querySnapshot = await getDocs(q);
-
-    // querySnapshot.forEach((doc) => {
-    //   console.log(doc.id, '=>', doc.data());
-    // });
-  }
-
   useEffect(() => {
-    // setUser({
-    //   name: currentUser.displayName || currentUser.email,
-    //   email: currentUser.email,
-    //   avatar: currentUser.photoURL,
-    //   uid: currentUser.uid,
-    //   followers: [],
-    //   following: [],
-    //   posts: [],
-    // });
-    //   setLoading(false);
-    // } else {
-    //   setLoading(true);
-
     if (currentUser) {
-      queryThing();
+      setLoading(false);
     }
   }, [currentUser]);
 
   return (
     loading === false && (
-      <div className="m-3 ">
+      <div className="m-3 min-h-max">
         {/* top row */}
         <div className="text-sm sm:text-lg flex items-center py-2 mb-8">
-          {user.avatar === null ? (
+          {currentUser.avatar === null ? (
             <AccountCircleIcon sx={{ height: 45, width: 45 }} />
           ) : (
-            <img
-              className="w-12 h-12 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-              src={user.avatar}
-              alt="AVATAR"
-            />
+            <AccountCircleIcon sx={{ height: 45, width: 45 }} />
+            // <img
+            //   className="w-12 h-12 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
+            //   src={user.avatar}
+            //   alt="AVATAR"
+            // />
           )}
-          <div className="ml-2 w-1/3 ">{user.name}</div>
+          <div className="ml-2 w-1/3 ">{currentUser.name}</div>
           {/* stats */}
           <div className="text-xs sm:text-lg flex w-full justify-around">
             <div className="flex flex-col items-center">
-              <div>{user.posts.length}</div>
+              <div>{currentUser.posts.length}</div>
               <div>Posts</div>
             </div>
             <div className="flex flex-col items-center">
-              <div>{user.followers.length}</div>
+              <div>{currentUser.followers.length}</div>
               <div>Followers</div>
             </div>
             <div className="flex flex-col items-center">
-              <div>{user.following.length}</div>
+              <div>{currentUser.following.length}</div>
               <div>Following</div>
             </div>
           </div>
         </div>
         {/* grid of posts */}
         <div className="grid grid-cols-3 gap-1 ">
-          {user.posts.map((post, index) => {
+          {currentUser.posts.map((post, index) => {
             return (
               <div
                 key={post.caption + index}

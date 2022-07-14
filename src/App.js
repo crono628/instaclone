@@ -11,7 +11,7 @@ import Profile from './components/Profile/Profile';
 
 const App = () => {
   return (
-    <div className="bg-slate-200">
+    <div className="bg-slate-200 h-[100vh]">
       <AuthProvider>
         <HashRouter>
           <Nav path="/" />

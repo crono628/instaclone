@@ -8,7 +8,9 @@ import {
   getRedirectResult,
 } from 'firebase/auth';
 import React, { useContext, useEffect, useState, createContext } from 'react';
-import { auth } from '../../firebase.js';
+import { auth, db } from '../../firebase.js';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { userFactory } from '../Factories/userFactory.js';
 
 const AuthContext = createContext();
 
@@ -21,10 +23,24 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
-      setLoading(false);
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      const userRef = doc(db, 'instaUsers', user.uid);
+      const userSnap = await getDoc(userRef);
+      if (userSnap.exists()) {
+        setCurrentUser(userSnap.data());
+        console.log('user found');
+        setLoading(false);
+      } else {
+        await setDoc(doc(db, 'instaUsers', user.uid), {
+          ...userFactory(user),
+        });
+        setCurrentUser({
+          ...userFactory(user),
+        });
+        setLoading(false);
+      }
     });
+
     return unsubscribe;
   }, []);
 
