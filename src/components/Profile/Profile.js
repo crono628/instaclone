@@ -40,16 +40,22 @@ const Profile = () => {
             // />
           )}
           <div
-            className="ml-2 w-1/3 relative cursor-pointer"
+            className="ml-2 w-1/3 relative cursor-pointer hover:bg-slate-300"
             onClick={() => setMenu(!menu)}
           >
             {currentUser.name}
           </div>
           {menu && (
-            <div className="absolute mt-28 ml-10  bg-slate-400 p-1">
+            <div className="flex flex-col absolute mt-40 ml-10  bg-slate-400 p-4 rounded-lg">
+              <button
+                onClick={() => console.log('settings click')}
+                className="hover:bg-slate-300 text-lg sm:text-xl cursor-pointer font-bold py-1 "
+              >
+                Settings
+              </button>
               <button
                 onClick={() => logout()}
-                className="w-max text-xl sm:text-2xl cursor-pointer font-bold px-2 py-2 "
+                className="hover:bg-slate-300  text-lg sm:text-xl cursor-pointer font-bold py-1 "
               >
                 Log Out
               </button>

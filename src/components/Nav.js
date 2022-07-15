@@ -3,6 +3,9 @@ import { useAuth } from './Auth/AuthContext';
 import SearchIcon from '@mui/icons-material/Search';
 import { IconButton } from '@mui/material';
 import AddBoxIcon from '@mui/icons-material/AddBox';
+import { storage } from '../firebase';
+import { ref, uploadBytes } from 'firebase/storage';
+import Upload from './Upload.js/Upload';
 
 export const Nav = () => {
   const { currentUser } = useAuth();
@@ -35,17 +38,10 @@ export const Nav = () => {
             <IconButton onClick={handleSearch}>
               <SearchIcon />
             </IconButton>
-            <div className="flex text-xl sm:text-2xl flex-1 font-bold pl-2 py-2">
-              <form onSubmit={(e) => e.preventDefault()}>
-                <input
-                  ref={searchRef}
-                  className="flex w-2/3 border bg-cyan-500 rounded-lg text-xl sm:text-2xl"
-                />
-              </form>
-            </div>
           </div>
         )}
         <div className="mr-2">
+          <Upload />
           <IconButton>
             <AddBoxIcon />
           </IconButton>
