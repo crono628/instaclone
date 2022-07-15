@@ -24,6 +24,11 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user === null) {
+        setCurrentUser(user);
+        setLoading(false);
+        return;
+      }
       const userRef = doc(db, 'instaUsers', user.uid);
       const userSnap = await getDoc(userRef);
       if (userSnap.exists()) {
@@ -38,6 +43,7 @@ export const AuthProvider = ({ children }) => {
           ...userFactory(user),
         });
         setLoading(false);
+        console.log('user created');
       }
     });
 

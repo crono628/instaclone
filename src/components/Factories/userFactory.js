@@ -1,3 +1,5 @@
+import { add, isBefore } from 'date-fns';
+
 export function userFactory(user) {
   return {
     name: user.displayName || user.email,
@@ -7,6 +9,8 @@ export function userFactory(user) {
     followers: [],
     following: [],
     posts: [],
-    requests: [],
+    requestsReceived: [],
+    requestsSent: [],
+    stillNew: add(new Date(user.metadata.creationTime), { days: 14 }),
   };
 }

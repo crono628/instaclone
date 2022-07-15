@@ -15,9 +15,9 @@ import {
 import { useAuth } from '../Auth/AuthContext';
 
 const Profile = () => {
-  const { currentUser } = useAuth();
+  const { currentUser, logout } = useAuth();
   const [loading, setLoading] = useState(true);
-
+  const [menu, setMenu] = useState(false);
   useEffect(() => {
     if (currentUser) {
       setLoading(false);
@@ -39,7 +39,22 @@ const Profile = () => {
             //   alt="AVATAR"
             // />
           )}
-          <div className="ml-2 w-1/3 ">{currentUser.name}</div>
+          <div
+            className="ml-2 w-1/3 relative cursor-pointer"
+            onClick={() => setMenu(!menu)}
+          >
+            {currentUser.name}
+          </div>
+          {menu && (
+            <div className="absolute mt-28 ml-10  bg-slate-400 p-1">
+              <button
+                onClick={() => logout()}
+                className="w-max text-xl sm:text-2xl cursor-pointer font-bold px-2 py-2 "
+              >
+                Log Out
+              </button>
+            </div>
+          )}
           {/* stats */}
           <div className="text-xs sm:text-lg flex w-full justify-around">
             <div className="flex flex-col items-center">
