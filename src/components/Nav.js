@@ -5,15 +5,20 @@ import { IconButton } from '@mui/material';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { storage } from '../firebase';
 import { ref, uploadBytes } from 'firebase/storage';
-import Upload from './Upload.js/Upload';
+import UploadModal from './Upload/UploadModal';
 
 export const Nav = () => {
   const { currentUser } = useAuth();
   const [search, setSearch] = useState(false);
+  const [upload, setUpload] = useState(false);
   const searchRef = useRef();
 
   const handleSearch = () => {
     setSearch(!search);
+  };
+
+  const handleModal = () => {
+    setUpload(!upload);
   };
 
   return (
@@ -41,12 +46,12 @@ export const Nav = () => {
           </div>
         )}
         <div className="mr-2">
-          <Upload />
-          <IconButton>
+          <IconButton onClick={handleModal}>
             <AddBoxIcon />
           </IconButton>
         </div>
       </div>
+      <UploadModal onClick={handleModal} upload={upload} />
     </div>
   );
 };
