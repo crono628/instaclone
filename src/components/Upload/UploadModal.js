@@ -2,13 +2,14 @@ import React, { useRef, useState } from 'react';
 import { storage } from '../../firebase';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { useAuth } from '../Auth/AuthContext';
-import { Button, FileInput, Label, Modal } from 'flowbite-react';
+import { Button, FileInput, Label, Modal, Progress } from 'flowbite-react';
 import addPost from './addPost';
 
 export default function UploadModal({ onClick, upload }) {
   const [image, setImage] = useState(null);
   const [caption, setCaption] = useState('');
   const [loading, setLoading] = useState(false);
+  const [progressBar, setProgressBar] = useState(0);
   const inputRef = useRef();
   const { currentUser } = useAuth();
 
@@ -25,6 +26,7 @@ export default function UploadModal({ onClick, upload }) {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log('Upload is ' + progress + '% done');
+        setProgressBar(progress);
       },
       (error) => {
         console.log(error);
@@ -70,6 +72,17 @@ export default function UploadModal({ onClick, upload }) {
                 className="border-transparent focus:border-transparent focus:ring-0"
               />
             </div>
+            {progressBar > 0 && (
+              <div className="my-4">
+                <Progress
+                  labelProgress={true}
+                  label="Upload"
+                  labelPosition="outside"
+                  progress={progressBar}
+                />
+              </div>
+            )}
+            {progressBar >= 100 && <div>Picture uploaded successfully!</div>}
           </div>
         </Modal.Body>
         <Modal.Footer>
@@ -78,7 +91,10 @@ export default function UploadModal({ onClick, upload }) {
             pill={true}
             onClick={() => {
               handleUpload();
-              onClick();
+              setTimeout(() => {
+                onClick();
+                setProgressBar(0);
+              }, 3500);
             }}
           >
             Post

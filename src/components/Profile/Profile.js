@@ -85,7 +85,9 @@ const Profile = () => {
                     alt={post.caption}
                   />
                 </div>
-                <div className="p-1">{post.caption}</div>
+                <div className="p-1 h-8 text-xs sm:text-base text-ellipsis overflow-hidden whitespace-nowrap">
+                  {post.caption}
+                </div>
                 <div className="text-xs sm:text-lg flex flex-row justify-between py-1">
                   <div className="pl-2 flex items-center">
                     <ThumbUpIcon className="w-4 h-4 sm:w-6 sm:h-6" />{' '}

@@ -4,6 +4,6 @@ export function postFactory(post) {
     caption: post.caption,
     likes: [],
     comments: [],
-    timestamp: new Date(),
+    timestamp: new Date().getTime(),
   };
 }
