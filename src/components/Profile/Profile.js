@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
-import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import InsertCommentIcon from '@mui/icons-material/InsertComment';
 import { useAuth } from '../Auth/AuthContext';
+import {
+  AnnotationIcon,
+  ThumbUpIcon,
+  UserCircleIcon,
+} from '@heroicons/react/outline';
 
 const Profile = () => {
   const { currentUser, logout } = useAuth();
@@ -21,9 +22,10 @@ const Profile = () => {
         {/* top row */}
         <div className="text-sm sm:text-lg flex items-center py-2 mb-8">
           {currentUser.avatar === null ? (
-            <AccountCircleIcon sx={{ height: 45, width: 45 }} />
+            <UserCircleIcon className="w-8 h-8 sm:w-16 sm:h-16" />
           ) : (
-            <AccountCircleIcon sx={{ height: 45, width: 45 }} />
+            <UserCircleIcon className="w-8 h-8 sm:w-16 sm:h-16" />
+
             // <img
             //   className="w-12 h-12 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
             //   src={user.avatar}
@@ -85,11 +87,12 @@ const Profile = () => {
                 </div>
                 <div className="p-1">{post.caption}</div>
                 <div className="text-xs sm:text-lg flex flex-row justify-between py-1">
-                  <div className="pl-2">
-                    <ThumbUpOffAltIcon fontSize="inherit" /> {post.likes.length}
+                  <div className="pl-2 flex items-center">
+                    <ThumbUpIcon className="w-4 h-4 sm:w-6 sm:h-6" />{' '}
+                    {post.likes.length}
                   </div>
-                  <div className="pr-2">
-                    <InsertCommentIcon fontSize="inherit" />{' '}
+                  <div className="pr-2 flex items-center">
+                    <AnnotationIcon className="w-4 h-4 sm:w-6 sm:h-6" />
                     {post.comments.length}
                   </div>
                 </div>

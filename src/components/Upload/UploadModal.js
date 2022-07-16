@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { storage } from '../../firebase';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { useAuth } from '../Auth/AuthContext';
-import { Button, Modal } from 'flowbite-react';
+import { Button, FileInput, Label, Modal } from 'flowbite-react';
 import addPost from './addPost';
 
 export default function UploadModal({ onClick, upload }) {
@@ -48,26 +48,27 @@ export default function UploadModal({ onClick, upload }) {
         <Modal.Header />
         <Modal.Body>
           <div className="">
-            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-              <input
-                className="rounded-lg shadow-md border-2 border-gray-300 dark:border-gray-600"
+            <div id="fileUpload">
+              <div className="mb-2 block">
+                <Label htmlFor="file" value="Upload file" />
+              </div>
+              <FileInput
                 accept="image/png, image/jpeg"
                 ref={inputRef}
-                type="file"
                 onChange={(e) => {
                   setImage(e.target.files[0]);
                 }}
+                id="file"
+                helperText="Choose a picture to upload"
               />
-            </h3>
-            <div className="p-1 w-full rounded-lg shadow-md border-2 border-gray-300 dark:border-gray-600 ">
-              <label>
-                Caption
-                <input
-                  onChange={(e) => setCaption(e.target.value)}
-                  type="text"
-                  className="border-transparent focus:border-transparent focus:ring-0"
-                />
-              </label>
+            </div>
+            <div className="flex text-white p-1 w-full rounded-lg shadow-md border-2 border-gray-300 dark:border-gray-600 ">
+              <div className="bg-black">Caption</div>
+              <input
+                onChange={(e) => setCaption(e.target.value)}
+                type="text"
+                className="border-transparent focus:border-transparent focus:ring-0"
+              />
             </div>
           </div>
         </Modal.Body>

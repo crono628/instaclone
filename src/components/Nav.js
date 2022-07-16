@@ -1,11 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { useAuth } from './Auth/AuthContext';
-import SearchIcon from '@mui/icons-material/Search';
-import { IconButton } from '@mui/material';
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import { storage } from '../firebase';
-import { ref, uploadBytes } from 'firebase/storage';
 import UploadModal from './Upload/UploadModal';
+import { PlusCircleIcon, SearchIcon } from '@heroicons/react/outline';
+import { Button, Label, TextInput } from 'flowbite-react';
 
 export const Nav = () => {
   const { currentUser } = useAuth();
@@ -31,24 +28,25 @@ export const Nav = () => {
           </div>
         ) : !search ? (
           <div className="flex items-center pl-2">
-            <IconButton onClick={handleSearch}>
-              <SearchIcon />
-            </IconButton>
-            <div className="flex text-xl sm:text-2xl flex-1 font-bold   ">
+            <Button color="" onClick={handleSearch}>
+              <SearchIcon className={`w-4 h-4 sm:w-6 sm:h-6`} />
+            </Button>
+            <div className="flex text-xl sm:text-2xl flex-1 font-bold ml-2  ">
               InstaClone
             </div>
           </div>
         ) : (
           <div className="flex items-center ml-2 transition-opacity duration-100">
-            <IconButton onClick={handleSearch}>
-              <SearchIcon />
-            </IconButton>
+            <Button color="" onClick={handleSearch}>
+              <SearchIcon className={`w-4 h-4 sm:w-6 sm:h-6`} />
+            </Button>
+            <TextInput id="base" type="text" sizing="sm" />
           </div>
         )}
         <div className="mr-2">
-          <IconButton onClick={handleModal}>
-            <AddBoxIcon />
-          </IconButton>
+          <Button color="" pill={true} onClick={handleModal}>
+            <PlusCircleIcon className="w-4 h-4 sm:w-6 sm:h-6" />
+          </Button>
         </div>
       </div>
       <UploadModal onClick={handleModal} upload={upload} />
