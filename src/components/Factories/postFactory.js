@@ -1,9 +1,9 @@
-export function postFactory() {
+export function postFactory(post) {
   return {
-    img: '',
-    caption: '',
-    likes: 0,
+    img: post.img,
+    caption: post.caption,
+    likes: [],
     comments: [],
-    timestamp: '',
+    timestamp: new Date(),
   };
 }

@@ -1,42 +1,48 @@
 import React, { useRef, useState } from 'react';
 import { storage } from '../../firebase';
-import { ref, uploadBytes } from 'firebase/storage';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { useAuth } from '../Auth/AuthContext';
 import { Button, Modal } from 'flowbite-react';
+import addPost from './addPost';
 
 export default function UploadModal({ onClick, upload }) {
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState(null);
   const [caption, setCaption] = useState('');
   const [loading, setLoading] = useState(false);
   const inputRef = useRef();
   const { currentUser } = useAuth();
 
   const handleUpload = async () => {
+    if (image == null) {
+      return;
+    }
     setLoading(true);
-    if (image == null) return;
     const imageRef = ref(storage, `instaPics/${currentUser.uid}/${image.name}`);
-    await uploadBytes(imageRef, image).then((snapshot) => {
-      inputRef.current.value = '';
-    });
+    const uploadTask = uploadBytesResumable(imageRef, image);
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          console.log(url);
+          addPost(currentUser, url, caption);
+        });
+      }
+    );
     setLoading(false);
     setCaption('');
+    setImage('');
+    inputRef.current.value = '';
   };
 
   return (
-    // <div className="">
-    //   <div className="">
-    //     <input
-    //       accept="image/png, image/jpeg"
-    //       ref={inputRef}
-    //       type="file"
-    //       onChange={(e) => {
-    //         setImage(e.target.files[0]);
-    //       }}
-    //     />
-    //     <button onClick={upload}>Upload</button>
-    //   </div>
-    // </div>
-
     <>
       <Modal show={upload} size="md" popup={true} onClose={onClick}>
         <Modal.Header />

@@ -3,15 +3,6 @@ import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import InsertCommentIcon from '@mui/icons-material/InsertComment';
-import {
-  collection,
-  doc,
-  setDoc,
-  query,
-  where,
-  getDocs,
-  getDoc,
-} from 'firebase/firestore';
 import { useAuth } from '../Auth/AuthContext';
 
 const Profile = () => {
@@ -92,12 +83,13 @@ const Profile = () => {
                     alt={post.caption}
                   />
                 </div>
+                <div className="p-1">{post.caption}</div>
                 <div className="text-xs sm:text-lg flex flex-row justify-between py-1">
                   <div className="pl-2">
-                    <ThumbUpOffAltIcon fontSize="inherit" /> {post.likes}
+                    <ThumbUpOffAltIcon fontSize="inherit" /> {post.likes.length}
                   </div>
                   <div className="pr-2">
-                    <InsertCommentIcon fontSize="inherit" />
+                    <InsertCommentIcon fontSize="inherit" />{' '}
                     {post.comments.length}
                   </div>
                 </div>
