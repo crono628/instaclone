@@ -64,7 +64,6 @@ export const AuthProvider = ({ children }) => {
 
   const googleLogin = () => {
     const googleProvider = new GoogleAuthProvider();
-    // return signInWithPopup(auth, provider);
     return signInWithRedirect(auth, googleProvider);
   };
 

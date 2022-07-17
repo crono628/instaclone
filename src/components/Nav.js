@@ -1,11 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useAuth } from './Auth/AuthContext';
 import UploadModal from './Upload/UploadModal';
-import {
-  PlusCircleIcon,
-  SearchIcon,
-  UserCircleIcon,
-} from '@heroicons/react/outline';
+import { UserCircleIcon } from '@heroicons/react/outline';
 import {
   Avatar,
   Button,
@@ -19,34 +15,29 @@ import { useNavigate } from 'react-router-dom';
 export const Nav = () => {
   const { currentUser, logout } = useAuth();
   const [upload, setUpload] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (currentUser != null) {
-      setLoggedIn(true);
-    } else {
-      setLoggedIn(false);
-    }
-  }, []);
 
   const handleModal = () => {
     setUpload(!upload);
   };
 
+  const handleTitle = () => {
+    if (currentUser.verified) {
+      navigate('/');
+    } else {
+      navigate('/verify');
+    }
+  };
+
   return (
     <div className={!currentUser ? 'fixed w-screen' : null}>
-      <Navbar
-        // className={currentUser === null ? 'sticky' : null}
-        fluid={true}
-        rounded={true}
-      >
-        <Navbar.Brand href="#">
-          <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+      <Navbar fluid={true} rounded={true}>
+        <Navbar.Brand onClick={handleTitle}>
+          <span className="cursor-pointer self-center whitespace-nowrap text-xl font-semibold dark:text-white">
             InstaClone
           </span>
         </Navbar.Brand>
-        {loggedIn && (
+        {currentUser && (
           <div className="flex md:order-2">
             <Dropdown
               arrowIcon={false}
@@ -68,16 +59,19 @@ export const Nav = () => {
                   {currentUser.email}
                 </span>
               </Dropdown.Header>
-              <Dropdown.Item>New Post</Dropdown.Item>
-              <Dropdown.Item>Search</Dropdown.Item>
-              <Dropdown.Item onClick={() => navigate('/settings')}>
-                Settings
-              </Dropdown.Item>
-              <Dropdown.Divider />
+              {currentUser.verified && (
+                <div>
+                  <Dropdown.Item>New Post</Dropdown.Item>
+                  <Dropdown.Item>Search</Dropdown.Item>
+                  <Dropdown.Item onClick={() => navigate('/settings')}>
+                    Settings
+                  </Dropdown.Item>
+                  <Dropdown.Divider />
+                </div>
+              )}
               <Dropdown.Item
                 onClick={() => {
                   logout();
-                  setLoggedIn(false);
                 }}
               >
                 Sign out
