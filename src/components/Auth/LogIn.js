@@ -48,7 +48,7 @@ const LogIn = () => {
 
   return (
     <div className="h-[100vh]">
-      <div className="flex fixed flex-col py-4 mx-auto left-0 right-0 mt-12 max-w-xs items-center border rounded-md border-black bg-white">
+      <div className="flex fixed flex-col py-4 mx-auto left-0 right-0 mt-24 max-w-xs items-center border rounded-md border-black bg-white">
         <p className="text-3xl">Log In</p>
         <p className="h-7 text-red-600">{error}</p>
         <form className="flex flex-col" onSubmit={handleSubmit}>

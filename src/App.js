@@ -4,14 +4,14 @@ import { AuthProvider } from './components/Auth/AuthContext';
 import LogIn from './components/Auth/LogIn';
 import PrivateRoute from './components/Auth/PrivateRoute';
 import SignUp from './components/Auth/SignUp';
-import Feed from './components/Feed/Feed';
-import mockUser from './components/mockUser';
 import Nav from './components/Nav';
 import Profile from './components/Profile/Profile';
+import Settings from './components/Settings/Settings';
+import Verify from './components/Settings/Verify';
 
 const App = () => {
   return (
-    <div className="bg-slate-200 h-[100vh]">
+    <div className="bg-slate-200 h-screen w-screen">
       <AuthProvider>
         <HashRouter>
           <Nav path="/" />
@@ -21,6 +21,8 @@ const App = () => {
               <Route path="/signup" element={<SignUp />} />
               <Route exact path="/" element={<PrivateRoute />}>
                 <Route exact path="/" element={<Profile />} />
+                <Route exact path="/settings" element={<Settings />} />
+                <Route exact path="/settings" element={<Verify />} />
               </Route>
             </Routes>
           </div>
