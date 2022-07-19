@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from './Auth/AuthContext';
 import UploadModal from './Upload/UploadModal';
 import { UserCircleIcon } from '@heroicons/react/outline';
@@ -16,6 +16,12 @@ export const Nav = () => {
   const { currentUser, logout } = useAuth();
   const [upload, setUpload] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (currentUser) {
+      console.log('nav render');
+    }
+  }, [navigate]);
 
   const handleModal = () => {
     setUpload(!upload);
@@ -49,7 +55,7 @@ export const Nav = () => {
             >
               <Dropdown.Header onClick={handleTitle}>
                 <span className="block text-sm">
-                  {currentUser.name || currentUser.handle}
+                  {currentUser.username || currentUser.name}
                 </span>
                 <span className="block truncate text-xs font-medium">
                   {currentUser.email}
@@ -70,6 +76,7 @@ export const Nav = () => {
           </div>
         )}
       </Navbar>
+      <UploadModal onClick={handleModal} upload={upload} />
     </div>
 
     // <div>

@@ -9,7 +9,6 @@ import {
 const Profile = () => {
   const { currentUser, logout } = useAuth();
   const [loading, setLoading] = useState(true);
-  const [menu, setMenu] = useState(false);
   useEffect(() => {
     if (currentUser) {
       setLoading(false);
@@ -32,28 +31,9 @@ const Profile = () => {
             //   alt="AVATAR"
             // />
           )}
-          <div
-            className="ml-2 w-1/3 relative cursor-pointer hover:bg-slate-300"
-            onClick={() => setMenu(!menu)}
-          >
-            {currentUser.name}
+          <div className="ml-2 w-1/3 relative cursor-pointer">
+            {currentUser.username || currentUser.name}
           </div>
-          {menu && (
-            <div className="flex flex-col absolute mt-40 ml-10  bg-slate-400 p-4 rounded-lg">
-              <button
-                onClick={() => console.log('settings click')}
-                className="hover:bg-slate-300 text-lg sm:text-xl cursor-pointer font-bold py-1 "
-              >
-                Settings
-              </button>
-              <button
-                onClick={() => logout()}
-                className="hover:bg-slate-300  text-lg sm:text-xl cursor-pointer font-bold py-1 "
-              >
-                Log Out
-              </button>
-            </div>
-          )}
           {/* stats */}
           <div className="text-xs sm:text-lg flex w-full justify-around">
             <div className="flex flex-col items-center">

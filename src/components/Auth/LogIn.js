@@ -13,13 +13,15 @@ const LogIn = () => {
   useEffect(() => {
     if (currentUser !== null) {
       if (
-        [currentUser].every(
-          (item) => item.avatar === null && item.userName === null
+        [currentUser].some(
+          (item) => item.profilePicture === null && item.userName === null
         )
       ) {
         navigate('/finish-setup');
+        return;
       } else {
         navigate('/');
+        return;
       }
     }
   }, [currentUser]);
