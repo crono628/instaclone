@@ -31,12 +31,12 @@ const LogIn = () => {
     setLoading(false);
   };
 
-  const handleGoogle = async (e) => {
+  const handleGoogle = (e) => {
     e.preventDefault();
     setLoading(true);
     try {
       setError('');
-      await googleLogin();
+      googleLogin();
     } catch (error) {
       setError('Invalid email or password');
       setTimeout(() => {

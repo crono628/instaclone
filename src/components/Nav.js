@@ -10,7 +10,7 @@ import {
   Navbar,
   TextInput,
 } from 'flowbite-react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const Nav = () => {
   const { currentUser, logout } = useAuth();
@@ -22,11 +22,11 @@ export const Nav = () => {
   };
 
   const handleTitle = () => {
-    if (currentUser.verified) {
-      navigate('/');
-    } else {
-      navigate('/verify');
-    }
+    // if (currentUser.verified) {
+    //   navigate('/');
+    // } else {
+    //   navigate('/verify');
+    // }
   };
 
   return (
@@ -51,7 +51,7 @@ export const Nav = () => {
                 <UserCircleIcon className="w-8 h-8" />
               }
             >
-              <Dropdown.Header>
+              <Dropdown.Header onClick={handleTitle}>
                 <span className="block text-sm">
                   {currentUser.name || currentUser.handle}
                 </span>
@@ -61,10 +61,10 @@ export const Nav = () => {
               </Dropdown.Header>
               {currentUser.verified && (
                 <div>
-                  <Dropdown.Item>New Post</Dropdown.Item>
+                  <Dropdown.Item onClick={handleModal}>New Post</Dropdown.Item>
                   <Dropdown.Item>Search</Dropdown.Item>
-                  <Dropdown.Item onClick={() => navigate('/settings')}>
-                    Settings
+                  <Dropdown.Item>
+                    <Link to="settings">Settings</Link>
                   </Dropdown.Item>
                   <Dropdown.Divider />
                 </div>

@@ -26,6 +26,8 @@ const LogIn = () => {
       navigate('/');
     } catch (error) {
       setError('Failed account creation');
+      console.log(error);
+
       setTimeout(() => {
         setError('');
       }, 3000);
