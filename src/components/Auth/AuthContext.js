@@ -50,21 +50,21 @@ export const AuthProvider = ({ children }) => {
     return unsubscribe;
   }, []);
 
-  const signup = async (email, password) => {
-    return await createUserWithEmailAndPassword(auth, email, password);
+  const signup = (email, password) => {
+    return createUserWithEmailAndPassword(auth, email, password);
   };
 
-  const login = async (email, password) => {
-    return await signInWithEmailAndPassword(auth, email, password);
+  const login = (email, password) => {
+    return signInWithEmailAndPassword(auth, email, password);
   };
 
-  const logout = async () => {
-    return await signOut(auth);
+  const logout = () => {
+    return signOut(auth);
   };
 
-  const googleLogin = async () => {
+  const googleLogin = () => {
     const googleProvider = new GoogleAuthProvider();
-    return await signInWithRedirect(auth, googleProvider);
+    signInWithRedirect(auth, googleProvider);
   };
 
   const value = {

@@ -7,6 +7,7 @@ import SignUp from './components/Auth/SignUp';
 import Nav from './components/Nav';
 import Profile from './components/Profile/Profile';
 import Settings from './components/Settings/Settings';
+import FinishSetup from './components/Settings/FinishSetup';
 import Verify from './components/Settings/Verify';
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
               <Route exact path="/" element={<PrivateRoute />}>
                 <Route exact path="/" element={<Profile />} />
                 <Route path="/settings" element={<Settings />} />
+                <Route path="/finish-setup" element={<FinishSetup />} />
                 <Route path="/verify" element={<Verify />} />
               </Route>
             </Routes>

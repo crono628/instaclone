@@ -12,7 +12,15 @@ const LogIn = () => {
 
   useEffect(() => {
     if (currentUser !== null) {
-      navigate('/');
+      if (
+        [currentUser].every(
+          (item) => item.avatar === null && item.userName === null
+        )
+      ) {
+        navigate('/finish-setup');
+      } else {
+        navigate('/');
+      }
     }
   }, [currentUser]);
 
@@ -31,12 +39,11 @@ const LogIn = () => {
     setLoading(false);
   };
 
-  const handleGoogle = (e) => {
-    e.preventDefault();
+  const handleGoogle = async () => {
     setLoading(true);
     try {
       setError('');
-      googleLogin();
+      await googleLogin();
     } catch (error) {
       setError('Invalid email or password');
       setTimeout(() => {

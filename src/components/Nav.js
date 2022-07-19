@@ -22,11 +22,7 @@ export const Nav = () => {
   };
 
   const handleTitle = () => {
-    // if (currentUser.verified) {
-    //   navigate('/');
-    // } else {
-    //   navigate('/verify');
-    // }
+    navigate('/');
   };
 
   return (
@@ -69,13 +65,7 @@ export const Nav = () => {
                   <Dropdown.Divider />
                 </div>
               )}
-              <Dropdown.Item
-                onClick={() => {
-                  logout();
-                }}
-              >
-                Sign out
-              </Dropdown.Item>
+              <Dropdown.Item onClick={logout}>Sign out</Dropdown.Item>
             </Dropdown>
           </div>
         )}
