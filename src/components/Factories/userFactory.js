@@ -3,8 +3,8 @@ import { add, isBefore } from 'date-fns';
 export function userFactory(user) {
   return {
     name: user.displayName || user.email,
-    username: user.usename || null,
-    verified: user.emailVerified,
+    username: user.username || null,
+    verified: user.verified || user.emailVerified,
     email: user.email,
     profilePicture: user.profilePicture || null,
     uid: user.uid,

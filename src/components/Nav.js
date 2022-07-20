@@ -17,11 +17,11 @@ export const Nav = () => {
   const [upload, setUpload] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (currentUser) {
-      console.log('nav render');
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     console.log('nav render');
+  //   }
+  // }, [navigate]);
 
   const handleModal = () => {
     setUpload(!upload);
@@ -54,10 +54,10 @@ export const Nav = () => {
               }
             >
               <Dropdown.Header onClick={handleTitle}>
-                <span className="block text-sm">
+                <span className="cursor-pointer block text-sm">
                   {currentUser.username || currentUser.name}
                 </span>
-                <span className="block truncate text-xs font-medium">
+                <span className="cursor-pointer block truncate text-xs font-medium">
                   {currentUser.email}
                 </span>
               </Dropdown.Header>

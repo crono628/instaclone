@@ -15,11 +15,16 @@ const UsernameModal = ({ onClick, show }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      await userUpdate(currentUser, 'username', input);
+      await userUpdate(currentUser, 'username', input).then(() => {
+        setTimeout(() => {
+          onClick();
+        }, 1000);
+      });
     } catch (error) {
       console.log(error);
     }
     setLoading(false);
+    setInput('');
   };
 
   return (

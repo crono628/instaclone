@@ -1,24 +1,72 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import UploadModal from '../Upload/UploadModal';
+import UsernameModal from './UsernameModal';
 import { useNavigate } from 'react-router-dom';
+import SettingsOption from './SettingsOption';
+
+import { useAuth } from '../Auth/AuthContext';
 
 const Settings = () => {
+  const [modal, setModal] = useState(false);
+  const { currentUser } = useAuth();
+  const { username, profilePicture, verified } = currentUser;
   const navigate = useNavigate();
+  useEffect(() => {
+    console.log('rendering settings');
+  }, [currentUser, modal]);
+
+  const messages = {
+    username: 'Update username',
+    profilePicture: 'Update profile picture',
+    verified: 'Verify your account',
+  };
 
   return (
-    <>
-      <div className="text-center mt-5 my-5 text-2xl  w-full">Settings</div>
-      <div className="my-5 pl-5">Verify Email</div>
-      <div className="my-5 pl-5">Change Password</div>
-      <div
-        onClick={() => {
-          navigate('/finish-setup');
-        }}
-        className="my-5 pl-5"
-      >
-        More Settings
+    <div className="flex flex-col">
+      {/* Title changes based on user account completion */}
+      <div className="my-8 text-center text-xl">
+        {username === null || profilePicture === null || verified === null
+          ? 'Finish setting up your account'
+          : 'Settings'}
       </div>
-      <div className="my-5 pl-5">Delete Account</div>
-    </>
+      {/* profile picture */}
+      <div className="w-fit">
+        <SettingsOption
+          boolVal={profilePicture}
+          message={messages.profilePicture}
+        />
+      </div>
+      {/* username */}
+      <div className="w-fit" onClick={() => setModal(!modal)}>
+        <SettingsOption boolVal={username} message={messages.username} />
+      </div>
+      {/* email verified */}
+      <div className="w-fit">
+        <SettingsOption boolVal={verified} message={messages.verified} />
+      </div>
+
+      <div className="w-fit">
+        <div className="cursor-pointer my-5 p-2 hover:bg-slate-300 w-fit rounded-lg ">
+          Change Password
+        </div>
+      </div>
+
+      <div className="w-fit">
+        <div className="cursor-pointer my-5 p-2 hover:bg-slate-300 w-fit rounded-lg ">
+          Delete Account
+        </div>
+      </div>
+
+      <div
+        onClick={() => navigate('/')}
+        className="cursor-pointer my-8 mx-auto text-xl p-2 hover:bg-slate-300 w-fit rounded-lg "
+      >
+        {username === null || profilePicture === null || verified === null
+          ? 'Return to your profile'
+          : null}
+      </div>
+      <UsernameModal onClick={() => setModal(!modal)} show={modal} />
+    </div>
   );
 };
 

@@ -12,16 +12,12 @@ const LogIn = () => {
 
   useEffect(() => {
     if (currentUser !== null) {
-      if (
-        [currentUser].some(
-          (item) => item.profilePicture === null && item.userName === null
-        )
-      ) {
-        navigate('/finish-setup');
-        return;
+      const { username, profilePicture, verified } = currentUser;
+
+      if (username === null || profilePicture === null || verified === null) {
+        navigate('/settings');
       } else {
         navigate('/');
-        return;
       }
     }
   }, [currentUser]);

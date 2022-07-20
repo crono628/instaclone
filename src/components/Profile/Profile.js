@@ -32,7 +32,7 @@ const Profile = () => {
             // />
           )}
           <div className="ml-2 w-1/3 relative cursor-pointer">
-            {currentUser.username || currentUser.name}
+            {currentUser.username || currentUser.name || currentUser.email}
           </div>
           {/* stats */}
           <div className="text-xs sm:text-lg flex w-full justify-around">
