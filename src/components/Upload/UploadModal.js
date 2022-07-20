@@ -4,6 +4,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { useAuth } from '../Auth/AuthContext';
 import { Button, FileInput, Label, Modal, Progress } from 'flowbite-react';
 import addPost from './addPost';
+import { postFactory } from '../Factories/postFactory';
 
 export default function UploadModal({ onClick, upload }) {
   const [image, setImage] = useState(null);
@@ -11,7 +12,7 @@ export default function UploadModal({ onClick, upload }) {
   const [loading, setLoading] = useState(false);
   const [progressBar, setProgressBar] = useState(0);
   const inputRef = useRef();
-  const { currentUser } = useAuth();
+  const { currentUser, setCurrentUser } = useAuth();
 
   const handleUpload = async () => {
     if (image == null) {
@@ -25,7 +26,6 @@ export default function UploadModal({ onClick, upload }) {
       (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Upload is ' + progress + '% done');
         setProgressBar(progress);
       },
       (error) => {
@@ -35,6 +35,11 @@ export default function UploadModal({ onClick, upload }) {
         getDownloadURL(uploadTask.snapshot.ref).then((url) => {
           console.log(url);
           addPost(currentUser, url, caption);
+          const post = { img: url, caption: caption };
+          setCurrentUser({
+            ...currentUser,
+            posts: [...currentUser.posts, postFactory(post)],
+          });
         });
       }
     );
@@ -47,48 +52,48 @@ export default function UploadModal({ onClick, upload }) {
   return (
     <>
       <Modal show={upload} size="md" popup={true} onClose={onClick}>
-        <Modal.Header />
+        <Modal.Header>Upload a photo</Modal.Header>
         <Modal.Body>
-          <div className="">
-            <div id="fileUpload">
-              <div className="mb-2 block">
-                <Label htmlFor="file" value="Upload file" />
-              </div>
-              <FileInput
-                accept="image/png, image/jpeg"
-                ref={inputRef}
-                onChange={(e) => {
-                  setImage(e.target.files[0]);
-                }}
-                id="file"
-                helperText="Choose a picture to upload"
-              />
+          <div>
+            <div className="mb-2 block">
+              <Label htmlFor="file" value="Upload file" />
             </div>
-            <div className="flex text-white p-1 w-full rounded-lg shadow-md border-2 border-gray-300 dark:border-gray-600 ">
-              <div className="bg-black">Caption</div>
-              <input
-                onChange={(e) => setCaption(e.target.value)}
-                type="text"
-                className="border-transparent focus:border-transparent focus:ring-0"
-              />
-            </div>
-            {progressBar > 0 && (
-              <div className="my-4">
-                <Progress
-                  labelProgress={true}
-                  label="Upload"
-                  labelPosition="outside"
-                  progress={progressBar}
-                />
-              </div>
-            )}
-            {progressBar >= 100 && <div>Picture uploaded successfully!</div>}
+            <FileInput
+              accept="image/png, image/jpeg"
+              ref={inputRef}
+              onChange={(e) => {
+                setImage(e.target.files[0]);
+              }}
+              id="file"
+            />
           </div>
+          <div className="mt-7">
+            <Label htmlFor="caption-input">Caption </Label>
+          </div>
+          <input
+            id="caption-input"
+            onChange={(e) => setCaption(e.target.value)}
+            type="text"
+            className="rounded-lg border-2 border-gray-300 p-2 mt-2 w-full"
+            // className="border-transparent focus:border-transparent focus:ring-0"
+          />
+          {progressBar > 0 && (
+            <div className="my-4">
+              <Progress
+                labelProgress={true}
+                label="Upload"
+                labelPosition="outside"
+                progress={progressBar}
+              />
+            </div>
+          )}
+          {progressBar >= 100 && (
+            <div className="text-green-400">Picture uploaded successfully!</div>
+          )}
         </Modal.Body>
         <Modal.Footer>
           <Button
             disabled={loading}
-            pill={true}
             onClick={() => {
               handleUpload();
               setTimeout(() => {
@@ -99,7 +104,7 @@ export default function UploadModal({ onClick, upload }) {
           >
             Post
           </Button>
-          <Button onClick={onClick} pill={true} color="gray">
+          <Button onClick={onClick} color="gray">
             Cancel
           </Button>
         </Modal.Footer>

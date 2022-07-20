@@ -7,7 +7,7 @@ import {
 } from '@heroicons/react/outline';
 
 const Profile = () => {
-  const { currentUser, logout } = useAuth();
+  const { currentUser, setCurrentUser } = useAuth();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     if (currentUser) {
