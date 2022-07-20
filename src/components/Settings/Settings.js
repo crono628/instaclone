@@ -11,9 +11,9 @@ const Settings = () => {
   const { currentUser } = useAuth();
   const { username, profilePicture, verified } = currentUser;
   const navigate = useNavigate();
-  useEffect(() => {
-    console.log('settings rendered');
-  }, [currentUser]);
+  // useEffect(() => {
+  //   console.log('settings rendered');
+  // }, [currentUser]);
 
   const messages = {
     username: 'Update username',

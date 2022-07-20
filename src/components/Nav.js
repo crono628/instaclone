@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useAuth } from './Auth/AuthContext';
 import UploadModal from './Upload/UploadModal';
 import { UserCircleIcon } from '@heroicons/react/outline';
@@ -15,13 +15,21 @@ import { Link, useNavigate } from 'react-router-dom';
 export const Nav = () => {
   const { currentUser, logout } = useAuth();
   const [upload, setUpload] = useState(false);
+  const [menu, setMenu] = useState(false);
+  const navRef = useRef();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (currentUser) {
-  //     console.log('nav render');
-  //   }
-  // }, [navigate]);
+  useEffect(() => {
+    const outsideClick = (e) => {
+      if (menu && navRef.current && !navRef.current.contains(e.target)) {
+        setMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', outsideClick);
+    return () => {
+      document.removeEventListener('mousedown', outsideClick);
+    };
+  }, [menu]);
 
   const handleModal = () => {
     setUpload(!upload);
@@ -40,39 +48,37 @@ export const Nav = () => {
           </span>
         </Navbar.Brand>
         {currentUser && (
-          <div className="flex md:order-2">
-            <Dropdown
-              arrowIcon={false}
-              inline={true}
-              label={
-                // <Avatar
-                //   alt="User settings"
-                //   img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                //   rounded={true}
-                // />
-                <UserCircleIcon className="w-8 h-8" />
-              }
-            >
-              <Dropdown.Header onClick={handleTitle}>
-                <span className="cursor-pointer block text-sm">
-                  {currentUser.username || currentUser.name}
-                </span>
-                <span className="cursor-pointer block truncate text-xs font-medium">
-                  {currentUser.email}
-                </span>
-              </Dropdown.Header>
-              {currentUser.verified && (
-                <div>
-                  <Dropdown.Item onClick={handleModal}>New Post</Dropdown.Item>
-                  <Dropdown.Item>Search</Dropdown.Item>
-                  <Dropdown.Item>
-                    <Link to="settings">Settings</Link>
-                  </Dropdown.Item>
-                  <Dropdown.Divider />
-                </div>
-              )}
-              <Dropdown.Item onClick={logout}>Sign out</Dropdown.Item>
-            </Dropdown>
+          <div className="relative md:order-2">
+            <UserCircleIcon
+              onClick={() => setMenu(!menu)}
+              className="w-8 h-8 cursor-pointer"
+            />
+            {menu && (
+              <div
+                ref={navRef}
+                className="w-48 p-1 absolute top-11 right-0 bg-white border-2 border-gray-500 border-solid rounded-lg shadow-lg"
+              >
+                <Dropdown.Item onClick={handleTitle}>
+                  <span className="cursor-pointer block text-sm">
+                    {currentUser.username || currentUser.name}
+                  </span>
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                {currentUser.verified && (
+                  <div>
+                    <Dropdown.Item onClick={handleModal}>
+                      New Post
+                    </Dropdown.Item>
+                    <Dropdown.Item>Search</Dropdown.Item>
+                    <Dropdown.Item>
+                      <Link to="settings">Settings</Link>
+                    </Dropdown.Item>
+                    <Dropdown.Divider />
+                  </div>
+                )}
+                <Dropdown.Item onClick={logout}>Sign out</Dropdown.Item>
+              </div>
+            )}
           </div>
         )}
       </Navbar>
