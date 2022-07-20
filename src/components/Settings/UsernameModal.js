@@ -1,5 +1,6 @@
+import { CheckIcon } from '@heroicons/react/outline';
 import { doc, updateDoc } from 'firebase/firestore';
-import { Button, Label, Modal } from 'flowbite-react';
+import { Button, Label, Modal, Toast } from 'flowbite-react';
 import React, { useState } from 'react';
 import { db } from '../../firebase';
 import { useAuth } from '../Auth/AuthContext';
@@ -7,8 +8,9 @@ import userUpdate from '../Factories/userUpdate';
 
 const UsernameModal = ({ onClick, show }) => {
   const [input, setInput] = useState('');
+  const [toast, setToast] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { currentUser } = useAuth();
+  const { currentUser, setCurrentUser } = useAuth();
   const { username } = currentUser;
 
   const handleSubmit = async (e) => {
@@ -16,15 +18,18 @@ const UsernameModal = ({ onClick, show }) => {
     setLoading(true);
     try {
       await userUpdate(currentUser, 'username', input).then(() => {
+        setCurrentUser({ ...currentUser, username: input });
+        setToast(true);
         setTimeout(() => {
           onClick();
-        }, 1000);
+          setInput('');
+          setToast(false);
+        }, 2000);
       });
     } catch (error) {
       console.log(error);
     }
     setLoading(false);
-    setInput('');
   };
 
   return (
@@ -39,10 +44,13 @@ const UsernameModal = ({ onClick, show }) => {
         <Modal.Body>
           <form onSubmit={handleSubmit}>
             <input
+              className="rounded-lg border-2 border-gray-300 p-2"
               onChange={(e) => setInput(e.target.value)}
               type="text"
               placeholder="Username"
               minLength={5}
+              maxLength={20}
+              value={input}
               required
             />
             <div className="mt-5">
@@ -51,6 +59,17 @@ const UsernameModal = ({ onClick, show }) => {
               </Button>
             </div>
           </form>
+          {toast && (
+            <Toast>
+              <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
+                <CheckIcon className="h-5 w-5" />
+              </div>
+              <div className="ml-3 text-sm font-normal">
+                Username updated successfully
+              </div>
+              <Toast.Toggle />
+            </Toast>
+          )}
         </Modal.Body>
       </Modal>
     </>
