@@ -26,27 +26,33 @@ export default function UploadModal({ onClick, upload }) {
       (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setProgressBar(progress);
+        setProgressBar(Math.round(progress));
       },
       (error) => {
         console.log(error);
       },
       () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          console.log(url);
-          addPost(currentUser, url, caption);
-          const post = { img: url, caption: caption };
-          setCurrentUser({
-            ...currentUser,
-            posts: [...currentUser.posts, postFactory(post)],
-          });
-        });
+        getDownloadURL(uploadTask.snapshot.ref)
+          .then(async (url) => {
+            await addPost(currentUser, url, caption);
+            const post = { img: url, caption: caption };
+            await setCurrentUser({
+              ...currentUser,
+              posts: [...currentUser.posts, postFactory(post)],
+            });
+          })
+          .then(
+            setTimeout(() => {
+              onClick();
+              setProgressBar(0);
+              setLoading(false);
+              setCaption('');
+              setImage('');
+              inputRef.current.value = '';
+            }, 1500)
+          );
       }
     );
-    setLoading(false);
-    setCaption('');
-    setImage('');
-    inputRef.current.value = '';
   };
 
   return (
@@ -71,6 +77,7 @@ export default function UploadModal({ onClick, upload }) {
             <Label htmlFor="caption-input">Caption </Label>
           </div>
           <input
+            value={caption}
             id="caption-input"
             onChange={(e) => setCaption(e.target.value)}
             type="text"
@@ -92,16 +99,7 @@ export default function UploadModal({ onClick, upload }) {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button
-            disabled={loading}
-            onClick={() => {
-              handleUpload();
-              setTimeout(() => {
-                onClick();
-                setProgressBar(0);
-              }, 3500);
-            }}
-          >
+          <Button disabled={loading} onClick={() => handleUpload()}>
             Post
           </Button>
           <Button onClick={onClick} color="gray">
