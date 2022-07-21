@@ -1,16 +1,15 @@
 import { AnnotationIcon, ThumbUpIcon } from '@heroicons/react/outline';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const GridItem = ({ post, index }) => {
-  const handleClick = (e) => {
-    console.log(e.target.dataset.postId);
-  };
+const GridItem = ({ post, index, handleClick }) => {
+  const navigate = useNavigate();
 
   return (
     <div className=" w-full bg-lime-50 flex flex-col mx-auto border-solid border-2 border-zinc-800 rounded-lg">
       <div className="flex-1 flex ">
         <img
-          className="cursor max-h-24 sm:max-h-48 w-full border-solid border-2 border-zinc-800 bg-neutral-500 object-contain rounded-md "
+          className="cursor-pointer max-h-24 sm:max-h-48 w-full border-solid border-2 border-zinc-800 bg-neutral-500 object-contain rounded-md "
           src={post.img}
           alt={post.caption}
           data-post-id={index}

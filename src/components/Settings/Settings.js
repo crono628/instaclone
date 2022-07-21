@@ -11,9 +11,6 @@ const Settings = () => {
   const { currentUser } = useAuth();
   const { username, profilePicture, verified } = currentUser;
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   console.log('settings rendered');
-  // }, [currentUser]);
 
   const messages = {
     username: 'Update username',
@@ -63,7 +60,7 @@ const Settings = () => {
       </div>
 
       <div
-        onClick={() => navigate('/')}
+        onClick={() => navigate('/user-profile')}
         className="cursor-pointer my-8 mx-auto text-xl p-2 hover:bg-slate-300 w-fit rounded-lg "
       >
         Return to your profile

@@ -8,26 +8,39 @@ import Nav from './components/Nav';
 import Profile from './components/Profile/Profile';
 import Settings from './components/Settings/Settings';
 import Verify from './components/Settings/Verify';
+import { useAuth } from './components/Auth/AuthContext';
+import ViewPost from './components/Profile/ViewPost';
 
 const App = () => {
+  const { currentUser } = useAuth();
+
   return (
     <div className="bg-slate-200 h-screen w-screen">
-      <AuthProvider>
-        <HashRouter>
-          <Nav path="/" />
-          <div className="max-w-3xl mx-auto">
-            <Routes>
-              <Route path="/login" element={<LogIn />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route exact path="/" element={<PrivateRoute />}>
-                <Route exact path="/" element={<Profile />} />
-                <Route path="/settings" element={<Settings />} />
-                <Route path="/verify" element={<Verify />} />
-              </Route>
-            </Routes>
-          </div>
-        </HashRouter>
-      </AuthProvider>
+      <Nav path="/" />
+      <div className="max-w-3xl mx-auto">
+        <Routes>
+          <Route path="/login" element={<LogIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route exact path="/" element={<PrivateRoute />}>
+            <Route
+              path="/user-profile"
+              element={<Profile user={currentUser} />}
+            >
+              <Route path="post" element={<ViewPost />} />
+            </Route>
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/verify" element={<Verify />} />
+            <Route
+              path="*"
+              element={
+                <main style={{ padding: '1rem' }}>
+                  <p>There's nothing here!</p>
+                </main>
+              }
+            />
+          </Route>
+        </Routes>
+      </div>
     </div>
   );
 };

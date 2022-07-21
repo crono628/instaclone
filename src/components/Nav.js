@@ -36,7 +36,7 @@ export const Nav = () => {
   };
 
   const handleTitle = () => {
-    navigate('/');
+    navigate('/user-profile');
   };
 
   return (
