@@ -1,6 +1,6 @@
 import { CheckIcon } from '@heroicons/react/outline';
 import { doc, updateDoc } from 'firebase/firestore';
-import { Button, Label, Modal, Toast } from 'flowbite-react';
+import { Badge, Button, Label, Modal, Toast } from 'flowbite-react';
 import React, { useState } from 'react';
 import { db } from '../../firebase';
 import { useAuth } from '../Auth/AuthContext';
@@ -8,7 +8,7 @@ import userUpdate from '../Factories/userUpdate';
 
 const UsernameModal = ({ onClick, show }) => {
   const [input, setInput] = useState('');
-  const [toast, setToast] = useState(false);
+  const [badge, setBadge] = useState(false);
   const [loading, setLoading] = useState(false);
   const { currentUser, setCurrentUser } = useAuth();
   const { username } = currentUser;
@@ -19,11 +19,11 @@ const UsernameModal = ({ onClick, show }) => {
     try {
       await userUpdate(currentUser, 'username', input).then(() => {
         setCurrentUser({ ...currentUser, username: input });
-        setToast(true);
+        setBadge(true);
         setTimeout(() => {
           onClick();
           setInput('');
-          setToast(false);
+          setBadge(false);
         }, 2000);
       });
     } catch (error) {
@@ -59,17 +59,7 @@ const UsernameModal = ({ onClick, show }) => {
               </Button>
             </div>
           </form>
-          {toast && (
-            <Toast>
-              <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
-                <CheckIcon className="h-5 w-5" />
-              </div>
-              <div className="ml-3 text-sm font-normal">
-                Username updated successfully
-              </div>
-              <Toast.Toggle />
-            </Toast>
-          )}
+          {badge && <Badge color="success">Success</Badge>}
         </Modal.Body>
       </Modal>
     </>

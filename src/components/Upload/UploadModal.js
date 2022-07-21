@@ -2,7 +2,14 @@ import React, { useRef, useState } from 'react';
 import { storage } from '../../firebase';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { useAuth } from '../Auth/AuthContext';
-import { Button, FileInput, Label, Modal, Progress } from 'flowbite-react';
+import {
+  Badge,
+  Button,
+  FileInput,
+  Label,
+  Modal,
+  Progress,
+} from 'flowbite-react';
 import addPost from './addPost';
 import { postFactory } from '../Factories/postFactory';
 
@@ -94,9 +101,7 @@ export default function UploadModal({ onClick, upload }) {
               />
             </div>
           )}
-          {progressBar >= 100 && (
-            <div className="text-green-400">Picture uploaded successfully!</div>
-          )}
+          {progressBar >= 100 && <Badge color="success">Success</Badge>}
         </Modal.Body>
         <Modal.Footer>
           <Button disabled={loading} onClick={() => handleUpload()}>

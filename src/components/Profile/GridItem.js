@@ -16,17 +16,17 @@ const GridItem = ({ post, index, handleClick }) => {
           onClick={handleClick}
         />
       </div>
-      <div className="p-1 h-8 text-xs sm:text-base text-ellipsis overflow-hidden whitespace-nowrap">
-        {post.caption}
-      </div>
-      <div className="text-xs sm:text-lg flex flex-row justify-between py-1">
+      <div className="text-xs sm:text-lg flex flex-row justify-start py-1">
         <div className="pl-2 flex items-center">
           <ThumbUpIcon className="w-4 h-4 sm:w-6 sm:h-6" /> {post.likes.length}
         </div>
-        <div className="pr-2 flex items-center">
+        <div className="ml-5 flex items-center">
           <AnnotationIcon className="w-4 h-4 sm:w-6 sm:h-6" />
           {post.comments.length}
         </div>
+      </div>
+      <div className="p-1 h-8 text-xs sm:text-base text-ellipsis overflow-hidden whitespace-nowrap">
+        {post.caption}
       </div>
     </div>
   );
