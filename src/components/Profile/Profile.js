@@ -21,7 +21,6 @@ const Profile = ({ user }) => {
   const handleClick = (e) => {
     let num = e.target.dataset.postId;
     let index = user.posts[num];
-    // navigate(`post`, { replace: true });
     setModal(true);
     setPost(index);
   };
@@ -39,7 +38,9 @@ const Profile = ({ user }) => {
           {user.profilePicture === null ? (
             <UserCircleIcon className="w-8 h-8 sm:w-16 sm:h-16" />
           ) : (
-            <Avatar img={user.profilePicture} rounded={true} />
+            <div className="w-8 h-8 sm:w-16 sm:h-16 flex">
+              <Avatar img={user.profilePicture} rounded={true} />
+            </div>
           )}
           <div className="ml-2 w-1/3 relative cursor-pointer">
             {user.username || user.name || user.email}

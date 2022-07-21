@@ -48,11 +48,19 @@ export const Nav = () => {
           </span>
         </Navbar.Brand>
         {currentUser && (
-          <div className="relative md:order-2">
-            <UserCircleIcon
-              onClick={() => setMenu(!menu)}
-              className="w-8 h-8 cursor-pointer"
-            />
+          <div className="cursor-pointer relative md:order-2">
+            {currentUser.profilePicture === null ? (
+              <UserCircleIcon
+                onClick={() => setMenu(!menu)}
+                className=" w-8 h-8 sm:w-16 sm:h-16"
+              />
+            ) : (
+              <Avatar
+                onClick={() => setMenu(!menu)}
+                img={currentUser.profilePicture}
+                rounded={true}
+              />
+            )}
             {menu && (
               <div
                 ref={navRef}

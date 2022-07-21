@@ -5,9 +5,11 @@ import SettingsOption from './SettingsOption';
 import { useAuth } from '../Auth/AuthContext';
 import { Toast } from 'flowbite-react';
 import { CheckIcon } from '@heroicons/react/outline';
+import ProfilePictureModal from './ProfilePictureModal';
 
 const Settings = () => {
-  const [modal, setModal] = useState(false);
+  const [usernameModal, setUsernameModal] = useState(false);
+  const [profilePictureModal, setProfilePictureModal] = useState(false);
   const { currentUser } = useAuth();
   const { username, profilePicture, verified } = currentUser;
   const navigate = useNavigate();
@@ -18,8 +20,12 @@ const Settings = () => {
     verified: 'Verify your email',
   };
 
-  const handleModal = () => {
-    setModal((prev) => !prev);
+  const handleUsernameModal = () => {
+    setUsernameModal((prev) => !prev);
+  };
+
+  const handleProfilePictureModal = () => {
+    setProfilePictureModal((prev) => !prev);
   };
 
   return (
@@ -30,17 +36,16 @@ const Settings = () => {
           ? 'Finish setting up your account'
           : 'Settings'}
       </div>
-
       <div className="pl-5">
         {/* profile picture */}
-        <div className="w-fit">
+        <div onClick={handleProfilePictureModal} className="w-fit">
           <SettingsOption
             boolVal={profilePicture}
             message={messages.profilePicture}
           />
         </div>
         {/* username */}
-        <div className="w-fit" onClick={handleModal}>
+        <div className="w-fit" onClick={handleUsernameModal}>
           <SettingsOption boolVal={username} message={messages.username} />
         </div>
         {/* email verified */}
@@ -65,7 +70,11 @@ const Settings = () => {
       >
         Return to your profile
       </div>
-      <UsernameModal onClick={handleModal} show={modal} />
+      <UsernameModal onClick={handleUsernameModal} show={usernameModal} />
+      <ProfilePictureModal
+        onClick={handleProfilePictureModal}
+        upload={profilePictureModal}
+      />
     </div>
   );
 };

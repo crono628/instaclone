@@ -1,8 +1,5 @@
-import { CheckIcon } from '@heroicons/react/outline';
-import { doc, updateDoc } from 'firebase/firestore';
-import { Badge, Button, Label, Modal, Toast } from 'flowbite-react';
+import { Badge, Button, Modal } from 'flowbite-react';
 import React, { useState } from 'react';
-import { db } from '../../firebase';
 import { useAuth } from '../Auth/AuthContext';
 import userUpdate from '../Factories/userUpdate';
 
@@ -53,13 +50,17 @@ const UsernameModal = ({ onClick, show }) => {
               value={input}
               required
             />
+            {badge && (
+              <div className="pt-5">
+                <Badge color="success">Success</Badge>
+              </div>
+            )}
             <div className="mt-5">
               <Button disabled={loading} type="submit">
                 Submit
               </Button>
             </div>
           </form>
-          {badge && <Badge color="success">Success</Badge>}
         </Modal.Body>
       </Modal>
     </>
