@@ -36,7 +36,7 @@ export const Nav = () => {
   };
 
   const handleTitle = () => {
-    navigate('/user-profile');
+    navigate('/');
   };
 
   return (
@@ -52,7 +52,7 @@ export const Nav = () => {
             {currentUser.profilePicture === null ? (
               <UserCircleIcon
                 onClick={() => setMenu(!menu)}
-                className=" w-8 h-8 sm:w-16 sm:h-16"
+                className=" w-8 h-8 sm:w-10 sm:h-10"
               />
             ) : (
               <Avatar

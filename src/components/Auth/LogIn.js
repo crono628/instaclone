@@ -17,7 +17,7 @@ const LogIn = () => {
       if (username === null || profilePicture === null || verified === null) {
         navigate('/settings');
       } else {
-        navigate('/user-profile');
+        navigate('/');
       }
     }
   }, [currentUser]);

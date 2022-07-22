@@ -65,7 +65,7 @@ const Settings = () => {
       </div>
 
       <div
-        onClick={() => navigate('/user-profile')}
+        onClick={() => navigate('/')}
         className="cursor-pointer my-8 mx-auto text-xl p-2 hover:bg-slate-300 w-fit rounded-lg "
       >
         Return to your profile

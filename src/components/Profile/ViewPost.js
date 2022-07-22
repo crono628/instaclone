@@ -3,7 +3,6 @@ import {
   ThumbUpIcon,
   UserCircleIcon,
 } from '@heroicons/react/outline';
-import { Avatar } from 'flowbite-react';
 import React, { useEffect, useState } from 'react';
 
 const ViewPost = ({ post, user }) => {
@@ -22,7 +21,10 @@ const ViewPost = ({ post, user }) => {
           {user.profilePicture === null ? (
             <UserCircleIcon className="w-8 h-8 sm:w-16 sm:h-16" />
           ) : (
-            <Avatar img={user.profilePicture} rounded={true} />
+            <img
+              className="w-16 h-16 sm:w-24 sm:h-24  rounded-full"
+              src={user.profilePicture}
+            />
           )}
           <div className="ml-2 w-1/3 relative cursor-pointer">
             {user.username || user.name || user.email}
