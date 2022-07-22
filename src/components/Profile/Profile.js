@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useAuth } from '../Auth/AuthContext';
 import { UserCircleIcon } from '@heroicons/react/outline';
 import GridItem from './GridItem';
 import ProfileStats from './ProfileStats';
-import { Avatar, Modal } from 'flowbite-react';
 import { useNavigate } from 'react-router-dom';
-import ViewPost from './ViewPost';
+import PostModal from './PostModal';
 
 const Profile = ({ user }) => {
   const [loading, setLoading] = useState(true);
@@ -30,21 +28,26 @@ const Profile = ({ user }) => {
     setPost(null);
   };
 
+  const value = { user, post };
+
   return (
     loading === false && (
       <div className="m-3 min-h-max">
         {/* top row */}
-        <div className="text-sm sm:text-lg flex items-center py-2 mb-8">
+        <div className="text-sm sm:text-lg flex items-center py-2 mb-4">
           {user.profilePicture === null ? (
             <UserCircleIcon className="w-8 h-8 sm:w-16 sm:h-16" />
           ) : (
-            <div className="w-8 h-8 sm:w-16 sm:h-16 flex">
-              <Avatar img={user.profilePicture} rounded={true} />
-            </div>
+            <img
+              className="w-16 h-16 sm:w-24 sm:h-24  rounded-full"
+              src={user.profilePicture}
+            />
           )}
           <div className="ml-2 w-1/3 relative cursor-pointer">
             {user.username || user.name || user.email}
           </div>
+        </div>
+        <div className="mb-8 max-w-[15rem] sm:max-w-md mx-auto">
           <ProfileStats user={user} />
         </div>
         {/* grid of posts */}
@@ -60,15 +63,7 @@ const Profile = ({ user }) => {
             );
           })}
         </div>
-        {modal && (
-          <Modal size="md" show={modal} position="center" onClose={onClose}>
-            <Modal.Header>Post</Modal.Header>
-            <Modal.Body>
-              <ViewPost user={user} post={post} />
-            </Modal.Body>
-            <Modal.Footer></Modal.Footer>
-          </Modal>
-        )}
+        <PostModal open={modal} onClose={onClose} value={value} />
       </div>
     )
   );

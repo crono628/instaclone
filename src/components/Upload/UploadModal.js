@@ -12,6 +12,8 @@ import {
 } from 'flowbite-react';
 import addPost from './addPost';
 import { postFactory } from '../Factories/postFactory';
+import imageCompression from 'browser-image-compression';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function UploadModal({ onClick, upload }) {
   const [image, setImage] = useState(null);
@@ -26,8 +28,17 @@ export default function UploadModal({ onClick, upload }) {
       return;
     }
     setLoading(true);
-    const imageRef = ref(storage, `instaPics/${currentUser.uid}/${image.name}`);
-    const uploadTask = uploadBytesResumable(imageRef, image);
+    const imageRef = ref(
+      storage,
+      `instaPics/${currentUser.uid}/${image.name + uuidv4()}`
+    );
+    const options = {
+      maxSizeMB: 0.07,
+      useWebWorker: true,
+    };
+    const compressedFile = await imageCompression(image, options);
+    const uploadTask = uploadBytesResumable(imageRef, compressedFile);
+
     uploadTask.on(
       'state_changed',
       (snapshot) => {
@@ -40,13 +51,14 @@ export default function UploadModal({ onClick, upload }) {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref)
-          .then(async (url) => {
-            await addPost(currentUser, url, caption);
+          .then((url) => {
+            addPost(currentUser, url, caption);
             const post = { img: url, caption: caption };
-            await setCurrentUser({
+            setCurrentUser({
               ...currentUser,
               posts: [...currentUser.posts, postFactory(post)],
             });
+            console.log('first then');
           })
           .then(
             setTimeout(() => {
@@ -54,7 +66,7 @@ export default function UploadModal({ onClick, upload }) {
               setProgressBar(0);
               setLoading(false);
               setCaption('');
-              setImage('');
+              setImage(null);
               inputRef.current.value = '';
             }, 1500)
           );
