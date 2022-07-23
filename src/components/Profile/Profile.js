@@ -19,13 +19,12 @@ const Profile = ({ user }) => {
   const handleClick = (e) => {
     let num = e.target.dataset.postId;
     let index = user.posts[num];
-    setModal(true);
     setPost(index);
+    setModal(true);
   };
 
   const onClose = () => {
     setModal(false);
-    setPost(null);
   };
 
   const value = { user, post };
