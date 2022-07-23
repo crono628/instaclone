@@ -39,7 +39,7 @@ const Profile = ({ user }) => {
             <UserCircleIcon className="w-8 h-8 sm:w-16 sm:h-16" />
           ) : (
             <img
-              className="w-16 h-16 sm:w-24 sm:h-24  rounded-full"
+              className="w-16 h-16 sm:w-24 sm:h-24 object-cover  rounded-full"
               src={user.profilePicture}
             />
           )}

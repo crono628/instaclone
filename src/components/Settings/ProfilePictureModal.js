@@ -11,6 +11,8 @@ import {
   Progress,
 } from 'flowbite-react';
 import addProfilePicture from './addProfilePicture';
+import imageCompression from 'browser-image-compression';
+import { v4 as uuidv4 } from 'uuid';
 
 function ProfilePictureModal({ onClick, upload }) {
   const [image, setImage] = useState(null);
@@ -24,8 +26,14 @@ function ProfilePictureModal({ onClick, upload }) {
       return;
     }
     setLoading(true);
-    const imageRef = ref(storage, `instaPics/${currentUser.uid}/${image.name}`);
-    const uploadTask = uploadBytesResumable(imageRef, image);
+    const imageRef = ref(storage, `instaPics/${currentUser.uid}/${uuidv4()}`);
+    const options = {
+      maxWidthOrHeight: 360,
+      useWebWorker: true,
+    };
+    const compressedFile = await imageCompression(image, options);
+    const uploadTask = uploadBytesResumable(imageRef, compressedFile);
+
     uploadTask.on(
       'state_changed',
       (snapshot) => {

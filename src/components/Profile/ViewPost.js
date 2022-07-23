@@ -31,7 +31,7 @@ const ViewPost = ({ post, user }) => {
           </div>
         </div>
         <img
-          className="mx-auto mb-5 w-fit h-fit max-h-64"
+          className="mx-auto mb-5 w-fit h-fit max-h-64 rounded-xl"
           src={post.img}
           alt={post.caption}
         />

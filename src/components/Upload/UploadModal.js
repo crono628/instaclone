@@ -28,12 +28,9 @@ export default function UploadModal({ onClick, upload }) {
       return;
     }
     setLoading(true);
-    const imageRef = ref(
-      storage,
-      `instaPics/${currentUser.uid}/${image.name + uuidv4()}`
-    );
+    const imageRef = ref(storage, `instaPics/${currentUser.uid}/${uuidv4()}`);
     const options = {
-      maxSizeMB: 0.07,
+      maxWidthOrHeight: 480,
       useWebWorker: true,
     };
     const compressedFile = await imageCompression(image, options);
@@ -58,7 +55,6 @@ export default function UploadModal({ onClick, upload }) {
               ...currentUser,
               posts: [...currentUser.posts, postFactory(post)],
             });
-            console.log('first then');
           })
           .then(
             setTimeout(() => {
@@ -101,7 +97,6 @@ export default function UploadModal({ onClick, upload }) {
             onChange={(e) => setCaption(e.target.value)}
             type="text"
             className="rounded-lg border-2 border-gray-300 p-2 mt-2 w-full"
-            // className="border-transparent focus:border-transparent focus:ring-0"
           />
           {progressBar > 0 && (
             <div className="my-4">
