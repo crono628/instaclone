@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import UsernameModal from './UsernameModal';
 import { useNavigate } from 'react-router-dom';
 import SettingsOption from './SettingsOption';
 import { useAuth } from '../Auth/AuthContext';
-import { Toast } from 'flowbite-react';
-import { CheckIcon } from '@heroicons/react/outline';
 import ProfilePictureModal from './ProfilePictureModal';
 
 const Settings = () => {

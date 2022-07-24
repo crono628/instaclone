@@ -2,14 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useAuth } from './Auth/AuthContext';
 import UploadModal from './Upload/UploadModal';
 import { UserCircleIcon } from '@heroicons/react/outline';
-import {
-  Avatar,
-  Button,
-  Dropdown,
-  Label,
-  Navbar,
-  TextInput,
-} from 'flowbite-react';
+import { Dropdown, Navbar } from 'flowbite-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 export const Nav = () => {
